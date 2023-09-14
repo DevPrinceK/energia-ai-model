@@ -9,7 +9,8 @@ import xgboost as xgb
 import pickle
 
 # Load the dataset
-data = pd.read_csv("power_data.csv")
+# data = pd.read_csv("power_data.csv")
+data = pd.read_csv("C:/Users/branana/Desktop/Github Repos/energia-ai-model/core/power_data.csv")
 
 # Handle missing values (if any)
 data.fillna(0, inplace=True) 
@@ -21,6 +22,23 @@ for col in categorical_cols:
     le = LabelEncoder()
     data[col] = le.fit_transform(data[col])
     label_encoders[col] = le
+
+# Access the label encoder for the specific column
+label_encoder = label_encoders["Power_Outage"]
+
+# Get the unique class labels and their corresponding encoded values
+class_labels = label_encoder.classes_
+encoded_values = label_encoder.transform(class_labels)
+
+# Combine the class labels and their encoded values into a dictionary
+encoding_info = dict(zip(class_labels, encoded_values))
+
+print("Encoded Values Mapping")
+print(encoding_info)
+    
+# save the label encoders if needed
+with open("label_encoders.pkl", "wb") as f:
+    pickle.dump(label_encoders, f)
 
 # Convert the 'Date' column to datetime
 data['Date'] = pd.to_datetime(data['Date'])
