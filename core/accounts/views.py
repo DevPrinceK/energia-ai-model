@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 
-from core.accounts.serializers import RegisterSerializer, UserSerializer
+from accounts.serializers import RegisterSerializer, UserSerializer
 
 
 # Create your views here.
