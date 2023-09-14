@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     
     # internal apps
     'prediction.apps.PredictionConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,8 @@ DATABASES = {
     }
 }
 
+# custom user model
+AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
