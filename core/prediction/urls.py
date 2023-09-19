@@ -1,7 +1,11 @@
 from django.urls import path
-from . import views
+from .views import prediction
+from .views import analysis
 
 urlpatterns = [
-    path('', views.Overview.as_view(), name="overview"),
-    path('predict-outage/', views.PredictPowerOutage.as_view(), name="predict"),
+    path('', prediction.Overview.as_view(), name="overview"),
+    path('predict-outage/', prediction.PredictPowerOutage.as_view()),
+    path('power-by-all-regions/', analysis.PowerByAllRegionsAPI.as_view()),
+    path('power-by-single-region/', analysis.PowerBySingleRegionAPI.as_view()),
+    path('power-by-districts-in-region/', analysis.PowerByDistrictsInRegionAPI.as_view()),
 ]
