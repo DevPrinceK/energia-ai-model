@@ -208,3 +208,43 @@ class PowerByTownInRegion(APIView):
         }
 
         return Response(response)
+
+
+class PowerByGridInRegion(APIView):
+    '''Returns power consumption and generation for a grid in a specified region'''
+
+    def get(self, request, *args, **kwargs):
+        # Read the data from the Google Sheet
+        gc = authenticate_google_sheets()
+        df = read_data_from_worksheet(gc, 'Energia Power Data')
+
+        # Ensure 'Power_Consumption_MWh' and 'Power_Generation_MWh' columns are numeric
+        df['Power_Consumption_MWh'] = pd.to_numeric(df['Power_Consumption_MWh'], errors='coerce')
+        df['Power_Generation_MWh'] = pd.to_numeric(df['Power_Generation_MWh'], errors='coerce')
+
+        # Get the region and town parameters from the request's data
+        region = request.data.get('region')
+        grid = request.data.get('grid')
+
+        if not region or not grid:
+            return Response({"error": "Both region and grid parameters are required in the request body"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Filter the DataFrame for the specified region and town
+        town_data = df[(df['Region'] == region) & (df['Grid'] == grid)]
+
+        if town_data.empty:
+            return Response({"error": f"No data found for region '{region}' and grid '{grid}'"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Calculate the sum of power consumption and generation for the specified town
+        total_power_consumption = town_data['Power_Consumption_MWh'].sum()
+        total_power_generation = town_data['Power_Generation_MWh'].sum()
+
+        # Prepare the response in the desired JSON format
+        response = {
+            "region": region,
+            "grid": grid,
+            "power_consumption": total_power_consumption,
+            "power_generation": total_power_generation
+        }
+
+        return Response(response)
