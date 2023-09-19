@@ -18,23 +18,26 @@ data.fillna(0, inplace=True)
 # Convert categorical variables to numerical using Label Encoding
 label_encoders = {}
 categorical_cols = ['Region', 'District', 'Town', 'Grid', 'Power_Outage']
+# categorical_cols = ['Region', 'District', 'Town', 'Grid']
 for col in categorical_cols:
     le = LabelEncoder()
     data[col] = le.fit_transform(data[col])
     label_encoders[col] = le
 
+
+print(data.head())
 # Access the label encoder for the specific column
-label_encoder = label_encoders["Power_Outage"]
+# label_encoder = label_encoders["Power_Outage"]
 
 # Get the unique class labels and their corresponding encoded values
-class_labels = label_encoder.classes_
-encoded_values = label_encoder.transform(class_labels)
+# class_labels = label_encoder.classes_
+# encoded_values = label_encoder.transform(class_labels)
 
-# Combine the class labels and their encoded values into a dictionary
-encoding_info = dict(zip(class_labels, encoded_values))
+# # Combine the class labels and their encoded values into a dictionary
+# encoding_info = dict(zip(class_labels, encoded_values))
 
-print("Encoded Values Mapping")
-print(encoding_info)
+# print("Encoded Values Mapping")
+# print(encoding_info)
     
 # save the label encoders if needed
 with open("label_encoders.pkl", "wb") as f:
