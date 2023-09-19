@@ -54,6 +54,8 @@ def generate_power_data(start_year: int, num_of_years: int) -> pd.DataFrame:
 
     df_power = pd.DataFrame(data)
     print('Dataframe Created Successfully!')
+    # save dataframe into googlesheet
+    
     # save to csv
     df_power.to_csv('power_data.csv', index=False)
     return df_power
