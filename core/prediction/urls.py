@@ -9,4 +9,5 @@ urlpatterns = [
     path('power-by-single-region/', analysis.PowerBySingleRegionAPI.as_view()),
     path('power-by-districts-in-region/', analysis.PowerByDistrictsInRegionAPI.as_view()),
     path('power-by-town-in-region/', analysis.PowerByTownInRegion.as_view()),
+    path('power-by-grid-in-region/', analysis.PowerByGridInRegion.as_view()),
 ]
