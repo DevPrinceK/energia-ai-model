@@ -59,6 +59,7 @@ class PredictPowerOutage(APIView):
 
         # Prepare the response
         response = {
+            'data': data,
             'predictions': ["No" if not bool(i) else "Yes" for i in predictions.tolist()]
         }
 
