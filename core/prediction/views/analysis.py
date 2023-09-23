@@ -128,7 +128,7 @@ class PowerBySingleRegionAPI(APIView):
 class PowerByDistrictsInRegionAPI(APIView):
     '''Returns power consumption by districts in a specified region'''
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         # Read the data from the Google Sheet
         gc = authenticate_google_sheets()
         df = read_data_from_worksheet(gc, 'Energia Power Data')
@@ -158,7 +158,7 @@ class PowerByDistrictsInRegionAPI(APIView):
             {
                 "district": district,
                 "power_consumption": power_consumption,
-                "power_consumption": power_generation,
+                "power_generation": power_generation,
             }
             for district, power_consumption, power_generation in zip(
                 district_power_consumption['District'],
