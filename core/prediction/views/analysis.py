@@ -213,7 +213,7 @@ class PowerByTownInRegion(APIView):
 class PowerByGridInRegion(APIView):
     '''Returns power consumption and generation for a grid in a specified region'''
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         # Read the data from the Google Sheet
         gc = authenticate_google_sheets()
         df = read_data_from_worksheet(gc, 'Energia Power Data')
